@@ -65,6 +65,7 @@ Un personnage à une attaque et une défense.
 - **Décorateur**
 - **Stratégie**
 - **Singleton**
+- **Etat**
 
 ## Utilisation
 
