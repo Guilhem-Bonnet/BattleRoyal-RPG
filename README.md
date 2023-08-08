@@ -9,11 +9,11 @@ Le Gameplay des personnages est basé sur le lancé de dès.
 Les dès sont des dès de 20.
 Un personnage à une attaque et une défense.
 
->1 = Echec critique
->dès <= 5 Echec
->dès 6 - 15 Neutre
->dès >= 16 Réussi
->dès == 20 Réussite critique
+- 1 = `Echec critique`
+- dès <= 5 `Echec`
+- dès 6 - 15 `Neutre`
+- dès >= 16 `Réussi`
+- dès == 20 `Réussite critique`
  
 # Attaque
 
@@ -42,9 +42,6 @@ Un personnage à une attaque et une défense.
 | Réussite Critique      | Réussite Critique      | Choc épique ! Dommage = Attaque x2 - Défense x2                             |
 | Échec Critique         | Réussite Critique      | Contre-attaque dévastatrice, l'attaquant subit 2 x Défense comme dommages  |
 
-
-
->Exemple
 
 
 ## Caractéristiques
