@@ -15,7 +15,7 @@ Un personnage à une attaque et une défense.
 - dès >= 16 `Réussi`
 - dès == 20 `Réussite critique`
  
-# Attaque
+### Attaque
 
 | Résultat de l'Attaque | Multiplieur | Dommage Résultant |
 |----------------------|-------------|------------------|
@@ -25,7 +25,7 @@ Un personnage à une attaque et une défense.
 | Réussite             | x1.5        | 1.5 x Attaque    |
 | Réussite Critique    | x2          | 2 x Attaque      |
 
-# Défense
+### Défense
 
 | Résultat de la Défense | Multiplieur | Défense Résultante |
 |------------------------|-------------|-------------------|
@@ -35,7 +35,7 @@ Un personnage à une attaque et une défense.
 | Réussite               | x1.5        | 1.5 x Défense     |
 | Réussite Critique      | x2          | 2 x Défense       |
 
-# Cas spécifiques d'interaction entre Attaque et Défense
+### Cas spécifiques d'interaction entre Attaque et Défense
 
 | Résultat de l'Attaque  | Résultat de la Défense | Conséquence                                                                 |
 |------------------------|------------------------|----------------------------------------------------------------------------|
