@@ -10,7 +10,7 @@ namespace BattleRoyal_RPG.Competences
     public class Soin : Competence
     {
         public override string Nom => "Soin";
-        public override float Recharge_Initiale { get; set; } = 3;
+        public override float Recharge_Initiale { get; set; } = 2.5f;
         public override TypeAttaque Type { get; set; } = TypeAttaque.Sacre;
         public int valueSoin { get; set; } = 20;
         public int valueDommage { get; set; } = 20;

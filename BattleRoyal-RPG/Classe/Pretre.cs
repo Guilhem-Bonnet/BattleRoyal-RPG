@@ -9,7 +9,7 @@ namespace BattleRoyal_RPG.Classe
 {
     public class Pretre : Personnage
     {
-        private Random _random = new Random();
+        
         public Pretre(string Name ) : base(Name)
         {
             Competences[0].Type = TypeAttaque.Sacre;
@@ -89,10 +89,6 @@ namespace BattleRoyal_RPG.Classe
                 return ciblesMortVivant[indexAleatoireMortVivant];
 
             }
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"Les MortsVivants ont été décimé");
-            Console.ResetColor();
 
             int indexAleatoire ; // Sélectionner un index aléatoire.
             do

@@ -16,6 +16,7 @@ namespace BattleRoyal_RPG
         {
             Cumul = 1; // Par défaut, le cumul est 1
             Personnage = personnage;
+            Appliquer();
         }
 
         // Cette méthode sera appelée chaque "tick" ou tour du jeu pour chaque état actif

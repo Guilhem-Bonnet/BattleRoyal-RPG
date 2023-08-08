@@ -17,9 +17,12 @@ namespace BattleRoyal_RPG.State
     internal class EtatEmpoisonne : Etat
     {
         public override string Nom => "Empoisoné";
+        public int degats = 3;
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
-        public EtatEmpoisonne(Personnage personnage) : base(personnage) { }
+        public EtatEmpoisonne(Personnage personnage) : base(personnage) { 
+         
+        }
 
 
         public override async Task Appliquer()
@@ -32,8 +35,22 @@ namespace BattleRoyal_RPG.State
                 {
                     if (_cts.Token.IsCancellationRequested)
                         return;
+                    if (Personnage.EstMort)
+                        return;
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write($"{Personnage.Nom} est empoisoné et perd " );
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{degats*Cumul}pv\n");
+                    Console.ResetColor();
 
-                    Personnage.Vie -= 3 * Cumul;
+                    Personnage.Vie -= degats * Cumul;
+                    if (Personnage.EstMort)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        Console.WriteLine($"{Personnage.Nom} est mort empoisoné");
+                        Console.ResetColor();
+                        return;
+                    }
                     await Task.Delay(1000); // Attend 1 seconde
                 }
 

@@ -22,8 +22,10 @@ namespace BattleRoyal_RPG
             var zombieF = new Zombie("Zombie Gaspacho");
             var pretre = new Pretre("Pretre ATesSouhaits");
             var pretreA = new Pretre("Pretre Bépanten");
+            var alchimiste = new Alchimiste("Alchimiste Archimed");
+            var alchimisteA = new Alchimiste("Alchimiste Paul");
 
-            var arena = new BattleArena(new List<Personnage> { zombie, zombieA, zombieB, zombieC, pretre });
+            var arena = new BattleArena(new List<Personnage> { alchimiste,alchimisteA, zombie, zombieA, zombieB, zombieC, zombieD, zombieE, zombieF, pretre, pretreA });
 
             Console.WriteLine("Le combat commence !");
 

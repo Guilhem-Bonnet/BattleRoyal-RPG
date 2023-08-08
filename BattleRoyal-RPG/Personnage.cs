@@ -18,7 +18,7 @@ namespace BattleRoyal_RPG
         public virtual bool EstAttaquable => !EstMort;  // Par défaut, un personnage est attaquable s'il n'est pas mort.
         public virtual bool EstMort => Vie <= 0;  // Par défaut, un personnage est mort si sa vie est <= 0.
         private bool? _estMangeable; // Nullable pour déterminer si elle a été explicitement définie.
-
+        protected Random _random = new Random();
         public virtual bool EstMangeable
         {
             get => _estMangeable ?? EstMort;  // Si _estMangeable n'a pas été défini, il retournera EstMort.
