@@ -3,6 +3,50 @@
 ## Description
 **BattleRoyal-RPG** est un jeu de combat en temps réel basé sur la console. Les joueurs choissisent les différents personnages, tels que des zombies et des prêtres, qui s'affronteront dans une arène. La mécanique du jeu repose sur une architecture multithreadée permettant de gérer simultanément des actions comme les attaques et les délais de recharge, rendant le jeu fluide et interactif.
 
+## Système de dès
+
+Le Gameplay des personnages est basé sur le lancé de dès.
+Les dès sont des dès de 20.
+Un personnage à une attaque et une défense.
+
+>1 = Echec critique
+>dès <= 5 Echec
+>dès 6 - 15 Neutre
+>dès >= 16 Réussi
+>dès == 20 Réussite critique
+ 
+# Attaque
+
+| Résultat de l'Attaque | Multiplieur | Dommage Résultant |
+|----------------------|-------------|------------------|
+| Échec Critique       | x0          | 0                |
+| Échec                | x0          | 0                |
+| Neutre               | x1          | Attaque          |
+| Réussite             | x1.5        | 1.5 x Attaque    |
+| Réussite Critique    | x2          | 2 x Attaque      |
+
+# Défense
+
+| Résultat de la Défense | Multiplieur | Défense Résultante |
+|------------------------|-------------|-------------------|
+| Échec Critique         | x0          | 0                 |
+| Échec                  | x0          | 0                 |
+| Neutre                 | x1          | Défense           |
+| Réussite               | x1.5        | 1.5 x Défense     |
+| Réussite Critique      | x2          | 2 x Défense       |
+
+# Cas spécifiques d'interaction entre Attaque et Défense
+
+| Résultat de l'Attaque  | Résultat de la Défense | Conséquence                                                                 |
+|------------------------|------------------------|----------------------------------------------------------------------------|
+| Réussite Critique      | Réussite Critique      | Choc épique ! Dommage = Attaque x2 - Défense x2                             |
+| Échec Critique         | Réussite Critique      | Contre-attaque dévastatrice, l'attaquant subit 2 x Défense comme dommages  |
+
+
+
+>Exemple
+
+
 ## Caractéristiques
 
 - **Multithreading**: Grâce à l'utilisation de threads, le jeu gère simultanément les attaques, les délais de recharge, et d'autres mécanismes sans que le joueur n'ait à attendre.
@@ -49,7 +93,8 @@ Console.ReadLine(); // Empêche la console de se fermer immédiatement
 ```
 ## Améliorations Futures
 
-- **Système d'Équipe** : Ajout de la mécanique d'équipe basée sur des races ou types de personnages, y compris l'introduction de boss.
+- **Système d'Équipe** : Ajout de la mécanique d'équipe basée sur des races ou types de personnages.
+- **Boss** : Ajout de boss que tous des participants devrons affronté.
 - **Armes et Loots** : Intégration d'un système d'armes avec des types d'attaque variés.
 - **Amélioration de l'IA** : Développement de l'intelligence de l'IA pour rendre les combats plus dynamiques et imprévisibles.
 - **Introduction de Nouvelles Classes de Personnages** : Ajout de diverses nouvelles classes pour enrichir la variété du gameplay.

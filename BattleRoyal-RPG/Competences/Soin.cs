@@ -13,7 +13,7 @@ namespace BattleRoyal_RPG.Competences
         public override float Recharge_Initiale { get; set; } = 3;
         public override TypeAttaque Type { get; set; } = TypeAttaque.Sacre;
         public int valueSoin { get; set; } = 20;
-        public int valueDommage { get; set; } = 30;
+        public int valueDommage { get; set; } = 20;
 
         public override async Task Utiliser(Personnage lanceur, Personnage cible)
         {
@@ -29,13 +29,13 @@ namespace BattleRoyal_RPG.Competences
                 // Soins ou dommages basés sur le type de cible
                 if (cible.TypeDuPersonnage == TypePersonnage.MortVivant)
                 {
-                    lanceur.CalculerDommage(lanceur.LancerDe(), cible.LancerDe(), Type, cible, valueDommage);// inflige des dégâts aux MortVivant
+                    int degats = lanceur.CalculerDommage(lanceur.LancerDe(), cible.LancerDe(), Type, cible, valueDommage);// inflige des dégâts aux MortVivant
                     
-                    cible.Vie -= valueDommage;
+                    cible.Vie -= degats;
 
                     Console.Write($"{lanceur.Nom} inflige ");
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($" {valueDommage} ");
+                    Console.Write($" {degats} ");
                     Console.ResetColor();
                     Console.WriteLine($"{cible.Nom} à {cible.Nom} avec {Nom} \n");
 

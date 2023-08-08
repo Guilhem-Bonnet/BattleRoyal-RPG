@@ -54,45 +54,111 @@ namespace BattleRoyal_RPG
         {
             Competences[0].Utiliser(this, cible);
         }
-        public virtual int CalculerDommage( ResultatDe resultatAttaque, ResultatDe resultatDefense, TypeAttaque typeAttaque, IPersonnage cible, int attaque = -1)
+        public virtual int CalculerDommage(ResultatDe resultatAttaque, ResultatDe resultatDefense, TypeAttaque typeAttaque, IPersonnage cible, int attaque = -1)
         {
-            int baseDommage;
-            if (attaque == -1) attaque = Attaque;
+            int baseDommage=0;
+            if (attaque < 0) attaque = Attaque;
 
-            switch (resultatAttaque)
+            int dommageAttaque = ResultaAttaque(resultatAttaque, attaque);
+            int resultDefense = ResultatDefense(resultatDefense,cible);
+
+            // Cas spécifiques
+            if (resultatAttaque == ResultatDe.RéussiteCritique && resultatDefense == ResultatDe.RéussiteCritique)
             {
-                case ResultatDe.EchecCritique when resultatDefense == ResultatDe.RéussiteCritique:
-                    // L'attaquant subit une contre-attaque
-                    Vie -= cible.Defense * 2;
-                    Console.WriteLine($"{Nom} subit une contre-attaque !");
-                    Console.WriteLine($"{Nom} perd {Defense * 2} points de vie !");
-                    baseDommage = 0; // Pas de dommage à la cible
-                    break;
-                case ResultatDe.EchecCritique:
-                case ResultatDe.Echec:
-                    baseDommage = 0; // Pas de dommage à la cible
-                    break;
-                case ResultatDe.Neutre when resultatDefense == ResultatDe.Neutre:
-                    baseDommage = attaque - cible.Defense; // Dommage basique diminué par la défense
-                    break;
-                case ResultatDe.RéussiteCritique:
-                    baseDommage = attaque * 2; // Double dommage
-                    break;
-                default:
-                    baseDommage = attaque;
-                    break;
+                baseDommage = dommageAttaque - resultDefense;
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"Choc épique ! {Nom} et {cible.Nom} démontrent une maîtrise incroyable !");
+            }
+            else if (resultatAttaque == ResultatDe.EchecCritique && resultatDefense == ResultatDe.RéussiteCritique)
+            {
+                baseDommage = -resultDefense * 2; // La défense fait des dégâts doublés à l'attaquant en tant que contre-attaque
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{Nom} tente une attaque risquée, mais {cible.Nom} retourne brillamment la situation avec une contre-attaque dévastatrice !");
+                
+                Vie += baseDommage; // On ajoute les dégâts négatifs à la vie
+                return 0;
+            }
+            else
+            {
+                baseDommage = dommageAttaque - resultDefense;
             }
             if (baseDommage < 0) baseDommage = 0;
+            
+
+            Console.ResetColor();
             Console.WriteLine($"{Nom} Attaque:{resultatAttaque} contre | {cible.Nom} Defense:{resultatDefense}");
-            Console.WriteLine($"type de l'attaque :{typeAttaque}");
+            Console.WriteLine($"Type de l'attaque : {typeAttaque}");
+
+            Console.Write("Attaque Base: ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{attaque}");
+            Console.ResetColor();
+
+            Console.Write("Attaque: ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{dommageAttaque}");
+            Console.ResetColor();
+
+            Console.Write("Défense: ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{resultDefense}");
+            Console.ResetColor();
+
             // Multiplier les dégâts si l'attaque est sacrée et que la cible est un mort-vivant
             if (typeAttaque == TypeAttaque.Sacre && cible.TypeDuPersonnage == TypePersonnage.MortVivant)
             {
-                baseDommage *= 2;
-                Console.WriteLine($"C'est super efficace ! dégats: {baseDommage}");
+                baseDommage += attaque;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"C'est super efficace ! Dégâts: {baseDommage}");
+                Console.ResetColor();
             }
+            // Mettre en couleur les dégâts et la défense
+            Console.Write("Dégâts infligés: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"{baseDommage}");
+            Console.ResetColor();
 
             return baseDommage;
+        }
+
+
+        private int ResultatDefense(ResultatDe resultatDefense, IPersonnage defenseur)
+        {
+              switch (resultatDefense)
+            {
+                case ResultatDe.EchecCritique:
+                    return 0;
+                case ResultatDe.Echec:
+                    return 0;
+                case ResultatDe.Neutre:
+                    return defenseur.Defense;
+                case ResultatDe.Réussite:
+                    return (int)(defenseur.Defense * 1.5);
+                case ResultatDe.RéussiteCritique:
+                    return defenseur.Defense * 2;
+                default:
+                    return defenseur.Defense;
+            }
+        }
+        private int ResultaAttaque(ResultatDe resultatAttaque, int attaque = -1)
+        {
+
+            switch (resultatAttaque)
+            {
+                case ResultatDe.EchecCritique:
+                    return 0;
+                case ResultatDe.Echec:
+                    return 0;
+                case ResultatDe.Neutre:
+                    return attaque;
+                case ResultatDe.Réussite:
+                    return (int)(attaque * 1.5);
+                case ResultatDe.RéussiteCritique:
+                    return attaque * 2;
+                default:
+                    return attaque;
+            }
         }
 
         public ResultatDe LancerDe()
