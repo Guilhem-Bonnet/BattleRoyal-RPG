@@ -1,7 +1,7 @@
 # BattleRoyal-RPG
 
 ## Description
-**BattleRoyal-RPG** est un jeu de combat tour par tour basé sur la console. Les joueurs contrôlent différents personnages, tels que des zombies et des prêtres, qui s'affrontent dans une arène. La mécanique du jeu repose sur une architecture multithreadée permettant de gérer simultanément des actions comme les attaques et les délais de recharge, rendant le jeu fluide et interactif.
+**BattleRoyal-RPG** est un jeu de combat en temps réel basé sur la console. Les joueurs choissisent les différents personnages, tels que des zombies et des prêtres, qui s'affronteront dans une arène. La mécanique du jeu repose sur une architecture multithreadée permettant de gérer simultanément des actions comme les attaques et les délais de recharge, rendant le jeu fluide et interactif.
 
 ## Caractéristiques
 
