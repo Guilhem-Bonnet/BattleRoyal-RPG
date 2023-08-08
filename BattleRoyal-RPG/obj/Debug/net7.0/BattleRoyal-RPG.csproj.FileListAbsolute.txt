@@ -1,0 +1,15 @@
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.csproj.AssemblyReference.cache
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.GeneratedMSBuildEditorConfig.editorconfig
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.AssemblyInfoInputs.cache
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.AssemblyInfo.cs
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.csproj.CoreCompileInputs.cache
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.exe
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.deps.json
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.runtimeconfig.json
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.dll
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.pdb
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.dll
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\refint\BattleRoyal-RPG.dll
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.pdb
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.genruntimeconfig.cache
+H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\ref\BattleRoyal-RPG.dll
