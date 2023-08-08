@@ -72,7 +72,7 @@ namespace BattleRoyal_RPG
             }
             else if (resultatAttaque == ResultatDe.EchecCritique && resultatDefense == ResultatDe.RéussiteCritique)
             {
-                baseDommage = -resultDefense * 2; // La défense fait des dégâts doublés à l'attaquant en tant que contre-attaque
+                baseDommage = -cible.Attaque * 2; // La défense fait des dégâts doublés à l'attaquant en tant que contre-attaque
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"{Nom} tente une attaque risquée, mais {cible.Nom} retourne brillamment la situation avec une contre-attaque dévastatrice !");
                 
@@ -206,8 +206,7 @@ namespace BattleRoyal_RPG
             }
         }
 
-        public virtual async Task ExecuterStrategie() { 
-        }
+        public virtual async Task ExecuterStrategie() { }
 
 
 

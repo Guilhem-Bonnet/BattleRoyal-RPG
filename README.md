@@ -39,8 +39,8 @@ Un personnage à une attaque et une défense.
 
 | Résultat de l'Attaque  | Résultat de la Défense | Conséquence                                                                 |
 |------------------------|------------------------|----------------------------------------------------------------------------|
-| Réussite Critique      | Réussite Critique      | Choc épique ! Dommage = Attaque x2 - Défense x2                             |
-| Échec Critique         | Réussite Critique      | Contre-attaque dévastatrice, l'attaquant subit 2 x Défense comme dommages  |
+| Réussite Critique      | Réussite Critique      | `Choc épique !` *Dommage = Attaque x2 - Défense x2*                             |
+| Échec Critique         | Réussite Critique      | `Contre-attaque dévastatrice!` *l'attaquant subit 2 x l'attaque du défenseur comme dommages*  |
 
 
 
