@@ -19,7 +19,7 @@ namespace BattleRoyal_RPG.Classe
 
         public override async Task ExecuterStrategie()
         {
-            Console.WriteLine($"{Nom} à {Vie}pv et {Defense}def");
+            
             Personnage cible = ChoisirCible();
 
             var competenceSoin = Competences.FirstOrDefault(c => c is Soin && c.EstDisponible);

@@ -22,6 +22,7 @@ namespace BattleRoyal_RPG.Decorateur
         public override bool EstMangeable
         {
             get { return true; } // Un personnage mort est mangeable
+            set { base.EstMangeable = value; }
         }
         public override bool Mort
         {

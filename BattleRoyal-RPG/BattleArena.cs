@@ -25,10 +25,20 @@ namespace BattleRoyal_RPG
                     participant.ExecuterStrategie();
 
                     // Pour que chaque action ait un peu de délai et que le combat ne se termine pas instantanément
-                    await Task.Delay(500);
+                    //await Task.Delay(500);
                 }
-            }
+ 
 
+            }
+            foreach (var participant in Participants)
+            {
+                Console.Write($"{participant.Nom} \n");
+                Console.Write($"Vie: {participant.Vie} \n");
+                Console.Write($"EstMort: {participant.EstMort}. \n");
+                Console.Write($"EstMangeable: {participant.EstMangeable}.\n");
+                Console.Write($"EstAttaquable: {participant.EstAttaquable}.\n");
+                Console.Write($"\n");
+            }
             var survivors = Participants.Where(p => p.Vie > 0).ToList();
             if (survivors.Count == 1)
             {
@@ -39,6 +49,11 @@ namespace BattleRoyal_RPG
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Les MortVivants ont dominé le champ de bataille!");
+            }
+            else if (survivors.All(s => s.TypeDuPersonnage == TypePersonnage.Humain))
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Les Humains ont dominé le champ de bataille!");
             }
             else
             {

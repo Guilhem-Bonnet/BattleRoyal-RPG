@@ -20,18 +20,18 @@ namespace BattleRoyal_RPG.Classe
 
         public override async Task ExecuterStrategie()
         {
-            Console.WriteLine($"{Nom} à {Vie}pv et {Defense}def");
             var competenceMangeMort = Competences.FirstOrDefault(c => c.EstDisponible && c is MangeMort);
             var competenceAttaque = Competences.FirstOrDefault(c => c.EstDisponible && c is AttaqueBase);
+            
 
-
-            if (Vie <= SEUIL_SANTE && competenceMangeMort != null && competenceMangeMort.EstDisponible)
+            if (Vie <= SEUIL_SANTE && competenceMangeMort != null)
             {
                 // Cherche une cible morte parmi tous les personnages.
                 var cibleMorte = TrouverCibleMorte();
-
+                
                 if (cibleMorte != null)
                 {
+                    Console.WriteLine($"{Nom} trouve {cibleMorte.Nom}.");
                     // Si une cible morte est trouvée, utilise "MangeMort".
                     Console.WriteLine($"{Nom} utilise {competenceMangeMort.Nom} sur {cibleMorte.Nom}.");
                     await competenceMangeMort.Utiliser(this, cibleMorte);
@@ -51,7 +51,6 @@ namespace BattleRoyal_RPG.Classe
 
         private Personnage TrouverCibleNonMortVivant()
         {
-            // Vous devrez adapter cette logique en fonction de la façon dont vous gérez tous les personnages dans votre jeu.
 
             List<Personnage> ciblesMortVivant = new List<Personnage>();
 
@@ -73,7 +72,7 @@ namespace BattleRoyal_RPG.Classe
         private Personnage TrouverCibleMorte()
         {
             // Supposant que vous avez une méthode pour récupérer tous les personnages.
-            return BattleArena.Participants.FirstOrDefault(p => p.EstMangeable);
+            return BattleArena.Participants.FirstOrDefault(predicate: p => p.EstMangeable);
         }
 
     }

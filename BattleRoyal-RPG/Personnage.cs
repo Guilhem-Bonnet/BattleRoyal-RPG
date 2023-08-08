@@ -17,7 +17,13 @@ namespace BattleRoyal_RPG
         public int Defense { get; set; } = 10;
         public virtual bool EstAttaquable => !EstMort;  // Par défaut, un personnage est attaquable s'il n'est pas mort.
         public virtual bool EstMort => Vie <= 0;  // Par défaut, un personnage est mort si sa vie est <= 0.
-        public virtual bool EstMangeable { get; set; }=false; // Par défaut, un personnage n'est pas mangeable.
+        private bool? _estMangeable; // Nullable pour déterminer si elle a été explicitement définie.
+
+        public virtual bool EstMangeable
+        {
+            get => _estMangeable ?? EstMort;  // Si _estMangeable n'a pas été défini, il retournera EstMort.
+            set => _estMangeable = value;
+        }
         public TypePersonnage TypeDuPersonnage { get; set; } = TypePersonnage.Humain;
         public int Vie
                 {
@@ -56,6 +62,7 @@ namespace BattleRoyal_RPG
         }
         public virtual int CalculerDommage(ResultatDe resultatAttaque, ResultatDe resultatDefense, TypeAttaque typeAttaque, IPersonnage cible, int attaque = -1)
         {
+            Console.WriteLine($"{Nom} à {Vie}pv et {Defense}def");
             int baseDommage=0;
             if (attaque < 0) attaque = Attaque;
 
@@ -73,16 +80,26 @@ namespace BattleRoyal_RPG
             else if (resultatAttaque == ResultatDe.EchecCritique && resultatDefense == ResultatDe.RéussiteCritique)
             {
                 baseDommage = -cible.Attaque * 2; // La défense fait des dégâts doublés à l'attaquant en tant que contre-attaque
+
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"{Nom} tente une attaque risquée, mais {cible.Nom} retourne brillamment la situation avec une contre-attaque dévastatrice !");
-                
+                Console.Write($"{Nom} tente une attaque risquée, ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write($"mais {cible.Nom} ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write($"retourne brillamment la situation avec une contre-attaque ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"de {-baseDommage} dégâts!");
+
                 Vie += baseDommage; // On ajoute les dégâts négatifs à la vie
+
+                Console.ResetColor(); // Reset la couleur pour les prochaines écritures
                 return 0;
             }
             else
             {
                 baseDommage = dommageAttaque - resultDefense;
             }
+
             if (baseDommage < 0) baseDommage = 0;
             
 
@@ -106,7 +123,7 @@ namespace BattleRoyal_RPG
             Console.ResetColor();
 
             // Multiplier les dégâts si l'attaque est sacrée et que la cible est un mort-vivant
-            if (typeAttaque == TypeAttaque.Sacre && cible.TypeDuPersonnage == TypePersonnage.MortVivant)
+            if (typeAttaque == TypeAttaque.Sacre && cible.TypeDuPersonnage == TypePersonnage.MortVivant && baseDommage > 0)
             {
                 baseDommage += attaque;
                 Console.ForegroundColor = ConsoleColor.Yellow;
