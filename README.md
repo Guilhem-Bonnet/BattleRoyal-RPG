@@ -90,7 +90,7 @@ Console.WriteLine("Le combat est terminé !");
 Console.ReadLine(); // Empêche la console de se fermer immédiatement
 ```
 ## Améliorations Futures
-
+- **Design pattern Observeur** : Pour l'affichage des messages en console et une modularité pour d'autre systèmes.
 - **Système d'Équipe** : Ajout de la mécanique d'équipe basée sur des races ou types de personnages.
 - **Boss** : Ajout de boss que tous des participants devrons affronté.
 - **Armes et Loots** : Intégration d'un système d'armes avec des types d'attaque variés.
