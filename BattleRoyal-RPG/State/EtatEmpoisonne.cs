@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BattleRoyal_RPG.Interface;
+using BattleRoyal_RPG.Observeur;
 
 /*
 Effet d'empoisonnement :
@@ -27,37 +28,36 @@ namespace BattleRoyal_RPG.State
 
         public override async Task Appliquer()
         {
+            _cts.Cancel();  // Annule la précédente instance d'empoisonnement (réinitialise le délai)
+            _cts = new CancellationTokenSource();
+
+            for (int i = 0; i < 5; i++)
             {
-                _cts.Cancel();  // Annule la précédente instance d'empoisonnement (réinitialise le délai)
-                _cts = new CancellationTokenSource();
+                if (_cts.Token.IsCancellationRequested)
+                    return;
+                if (Personnage.EstMort)
+                    return;
 
-                for (int i = 0; i < 5; i++)
+                var message = new Message(); // Créez une nouvelle instance de message à chaque itération
+                message.AddSegment($"{Personnage.Nom} est empoisoné et perd ", ConsoleColor.DarkMagenta)
+                       .AddSegment($"{degats}pv\n", ConsoleColor.Red);
+
+                Personnage.Vie -= degats * Cumul;
+
+                if (Personnage.EstMort)
                 {
-                    if (_cts.Token.IsCancellationRequested)
-                        return;
-                    if (Personnage.EstMort)
-                        return;
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    Console.Write($"{Personnage.Nom} est empoisoné et perd " );
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"{degats*Cumul}pv\n");
-                    Console.ResetColor();
-
-                    Personnage.Vie -= degats * Cumul;
-                    if (Personnage.EstMort)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                        Console.WriteLine($"{Personnage.Nom} est mort empoisoné");
-                        Console.ResetColor();
-                        return;
-                    }
-                    await Task.Delay(1000); // Attend 1 seconde
+                    message.AddSegment($"{Personnage.Nom} est mort empoisoné", ConsoleColor.DarkMagenta);
+                    Personnage.notifier.AddMessageToQueue(message);
+                    return;
                 }
 
-                AnnulerCumul(); // Réinitialise le cumul après la fin de l'effet
-
+                Personnage.notifier.AddMessageToQueue(message);
+                await Task.Delay(1000); // Attend 1 seconde
             }
+
+            AnnulerCumul(); // Réinitialise le cumul après la fin de l'effet
         }
+
         public override void Cumuler()
         {
             base.Cumuler();

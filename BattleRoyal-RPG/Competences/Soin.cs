@@ -31,7 +31,7 @@ namespace BattleRoyal_RPG.Competences
                 {
                     int degats = lanceur.CalculerDommage(lanceur.LancerDe(), cible.LancerDe(), Type, cible, valueDommage);// inflige des dégâts aux MortVivant
                     
-                    cible.Vie -= degats;
+                    lanceur.InfligerDommages(degats, cible);
 
                     Console.Write($"{lanceur.Nom} inflige ");
                     Console.ForegroundColor = ConsoleColor.Red;

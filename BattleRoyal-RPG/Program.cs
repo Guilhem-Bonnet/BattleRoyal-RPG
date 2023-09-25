@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using BattleRoyal_RPG.Observeur;
 
 namespace BattleRoyal_RPG
 {
@@ -12,6 +13,10 @@ namespace BattleRoyal_RPG
 
         static async Task Main(string[] args)
         {
+            var notifier = MessageNotifier.Instance;
+            var consoleObserver = new ConsoleObserver();
+            notifier.RegisterObserver(consoleObserver);
+
             // Initialisation des participants
             var zombie = new Zombie("Zombie Gaetan");
             var zombieA = new Zombie("Zombie Rémond");

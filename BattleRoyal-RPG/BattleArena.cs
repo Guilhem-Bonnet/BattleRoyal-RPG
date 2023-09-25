@@ -25,7 +25,7 @@ namespace BattleRoyal_RPG
                     participant.ExecuterStrategie();
 
                     // Pour que chaque action ait un peu de délai et que le combat ne se termine pas instantanément
-                    //await Task.Delay(500);
+                    await Task.Delay(10);
                 }
  
 

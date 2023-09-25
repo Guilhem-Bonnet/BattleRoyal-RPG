@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BattleRoyal_RPG.Interface;
 using BattleRoyal_RPG.Competences;
+using BattleRoyal_RPG.Observeur;
+using System.Diagnostics.Metrics;
 
 namespace BattleRoyal_RPG
 {
@@ -32,28 +34,34 @@ namespace BattleRoyal_RPG
                     {
                         if (_vie > 0 && value <= 0)
                         {
+                            var message = new Message();
+                            message.AddSegment($"{Nom} est mort !", ConsoleColor.Red);
+                            notifier.AddMessageToQueue(message);
                             new Decorateur.EstMort(this);
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine($"{Nom} est mort !");
-                            Console.ResetColor();
+                            
                         }
                         _vie = value;
                     }
                 }
+
         private List<Etat> Etats { get; } = new List<Etat>();
 
         public List<ICompetence> Competences { get ; set ; } = new List<ICompetence>();
         
         protected Random _rand = new Random();
         const int FACE_DE = 20;
+        // Champ notifier
+        public MessageNotifier notifier = MessageNotifier.Instance;
         public Personnage etatOriginal;
-
+  
         public Personnage(string nom)
         {
             etatOriginal = this;
             Nom = nom;
             Competences.Add(new AttaqueBase());
             _vie = VieMax;
+            
+
         }
         
         public void AttaquerBase(Personnage cible)
@@ -62,7 +70,10 @@ namespace BattleRoyal_RPG
         }
         public virtual int CalculerDommage(ResultatDe resultatAttaque, ResultatDe resultatDefense, TypeAttaque typeAttaque, IPersonnage cible, int attaque = -1)
         {
-            Console.WriteLine($"{Nom} à {Vie}pv et {Defense}def");
+
+            var message = new Message();
+                message.AddSegment($"{Nom} à {Vie}pv et {Defense}def \n");
+
             int baseDommage=0;
             if (attaque < 0) attaque = Attaque;
 
@@ -74,25 +85,36 @@ namespace BattleRoyal_RPG
             {
                 baseDommage = dommageAttaque - resultDefense;
 
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine($"Choc épique ! {Nom} et {cible.Nom} démontrent une maîtrise incroyable !");
+                message.AddSegment($"Choc épique ! ", ConsoleColor.Magenta)
+                   .AddSegment($"{Nom}", ConsoleColor.Red)
+                   .AddSegment($" et ", ConsoleColor.Magenta)
+                   .AddSegment($"{cible.Nom}", ConsoleColor.Red)
+                   .AddSegment($" démontrent une maîtrise incroyable !", ConsoleColor.Magenta);
+                notifier.AddMessageToQueue(message);
+
+
             }
             else if (resultatAttaque == ResultatDe.EchecCritique && resultatDefense == ResultatDe.RéussiteCritique)
             {
-                baseDommage = -cible.Attaque * 2; // La défense fait des dégâts doublés à l'attaquant en tant que contre-attaque
+                baseDommage = cible.Attaque * 2; // La défense fait des dégâts doublés à l'attaquant en tant que contre-attaque
+                message.AddSegment($"{Nom} tente une attaque risquée", ConsoleColor.Red)
+                    .AddSegment($" mais ", ConsoleColor.Magenta)
+                    .AddSegment($"{cible.Nom}", ConsoleColor.Red)
+                    .AddSegment($" retourne brillamment la situation avec une contre-attaque !", ConsoleColor.Yellow);
+ 
+                baseDommage = CalculVulnerabilites(baseDommage, typeAttaque, cible, message);
 
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{Nom} tente une attaque risquée, ");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write($"mais {cible.Nom} ");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"retourne brillamment la situation avec une contre-attaque ");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine($"de {-baseDommage} dégâts!");
+                message.AddSegment($"{ cible.Nom }, ConsoleColor.Red)")
+                    .AddSegment($"inflige")
+                    .AddSegment($" {baseDommage} dégâts!", ConsoleColor.Magenta)
+                    .AddSegment($" à ")
+                    .AddSegment($"{Nom} ", ConsoleColor.Blue);
 
-                Vie += baseDommage; // On ajoute les dégâts négatifs à la vie
+                notifier.AddMessageToQueue(message);
+                InfligerDommages(baseDommage, this);
 
-                Console.ResetColor(); // Reset la couleur pour les prochaines écritures
+
+
                 return 0;
             }
             else
@@ -101,44 +123,82 @@ namespace BattleRoyal_RPG
             }
 
             if (baseDommage < 0) baseDommage = 0;
-            
 
-            Console.ResetColor();
-            Console.WriteLine($"{Nom} Attaque:{resultatAttaque} contre | {cible.Nom} Defense:{resultatDefense}");
-            Console.WriteLine($"Type de l'attaque : {typeAttaque}");
-
-            Console.Write("Attaque Base: ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{attaque}");
-            Console.ResetColor();
-
-            Console.Write("Attaque: ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{dommageAttaque}");
-            Console.ResetColor();
-
-            Console.Write("Défense: ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{resultDefense}");
-            Console.ResetColor();
+            message.AddSegment($"{Nom}", ConsoleColor.Blue)
+                    .AddSegment(" Attaque: ")
+                    .AddSegment($"{resultatAttaque} ", ConsoleColor.Cyan)
+                    .AddSegment("contre | ")
+                    .AddSegment($"{cible.Nom}", ConsoleColor.Blue)
+                    .AddSegment(" Defense:")
+                    .AddSegment($"{resultatDefense}\n ", ConsoleColor.Cyan)
+                    .AddSegment($"Type de l'attaque : ");
+                    if (typeAttaque == TypeAttaque.Sacre)
+                    {
+                         message.AddSegment($"{typeAttaque}\n", ConsoleColor.Yellow);
+                    }
+                    else
+                    {
+                        message.AddSegment($"{typeAttaque}\n");
+                    }
+             message.AddSegment( "Attaque Base:")
+                    .AddSegment($"{attaque}\n", ConsoleColor.Blue)
+                    .AddSegment("Attaque: ")
+                    .AddSegment($"{dommageAttaque}\n", ConsoleColor.Green)
+                    .AddSegment("Défense: ")
+                    .AddSegment($"{resultDefense}\n", ConsoleColor.Green);
+                
 
             // Multiplier les dégâts si l'attaque est sacrée et que la cible est un mort-vivant
-            if (typeAttaque == TypeAttaque.Sacre && cible.TypeDuPersonnage == TypePersonnage.MortVivant && baseDommage > 0)
-            {
-                baseDommage += attaque;
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"C'est super efficace ! Dégâts: {baseDommage}");
-                Console.ResetColor();
-            }
-            // Mettre en couleur les dégâts et la défense
-            Console.Write("Dégâts infligés: ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{baseDommage}");
-            Console.ResetColor();
-
+            baseDommage = CalculVulnerabilites(baseDommage, typeAttaque, cible,message);
+            
+            notifier.AddMessageToQueue(message);
             return baseDommage;
         }
 
+        public void InfligerDommages(int dommages,IPersonnage cible)
+        {
+            var message = new Message();
+            message.AddSegment($"{cible.Nom}", ConsoleColor.Blue)
+                .AddSegment($" perd ")
+                .AddSegment($"{dommages}pv \n", ConsoleColor.Red)
+                .AddSegment($"{cible.Nom} new vie: ");
+
+                if (cible.Vie - dommages <= 0)
+                {
+                    message.AddSegment($"0", ConsoleColor.Red);
+                }
+                else
+                {
+                    message.AddSegment($"{cible.Vie - dommages}", ConsoleColor.Green);
+                }
+                notifier.AddMessageToQueue(message);
+            cible.Vie -= dommages;
+        }
+
+        private int CalculVulnerabilites(int dommage, TypeAttaque typeAttaque, IPersonnage cible, Message message = null)
+        {
+            switch (typeAttaque)
+            {
+                case TypeAttaque.Sacre:
+                    if (cible.TypeDuPersonnage == TypePersonnage.MortVivant)
+                    {
+                        dommage += Attaque;
+
+                        if (message != null)
+                            message.AddSegment($"C'est super efficace ! Dégâts: ", ConsoleColor.Yellow)
+                                   .AddSegment($"{dommage}", ConsoleColor.Green);
+                    
+                    }
+                    return dommage;
+                 case TypeAttaque.Normal:
+                    return dommage;
+                 default:
+                    return dommage;
+            }
+
+            
+        }
+      
 
         private int ResultatDefense(ResultatDe resultatDefense, IPersonnage defenseur)
         {

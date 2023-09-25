@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleRoyal_RPG.Observeur;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,33 +16,26 @@ namespace BattleRoyal_RPG.Competences
 
         public override async Task Utiliser(Personnage lanceur, Personnage cible)
         {
-
+            var message = new Message();
             // Si la cible n'est pas attaquable, la fonction retourne immédiatement
             if (!cible.EstAttaquable)
             {
-                Console.WriteLine("La cible n'est pas attaquable!");
+                message.AddSegment($"La cible {cible.Nom} n'est pas attaquable!", ConsoleColor.Red);
+                lanceur.notifier.AddMessageToQueue(message);
                 return;
             }
 
             ResultatDe resultatAttaque = lanceur.LancerDe();
             ResultatDe resultatDefense = cible.LancerDe();
 
-
-            Console.Write($"{lanceur.Nom} utilise  ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write($" {Nom} ");
-            Console.ResetColor();
-            Console.WriteLine($"sur {cible.Nom}! \n");
+            message.AddSegment($"{lanceur.Nom} utilise  ")
+                   .AddSegment($"{Nom}", ConsoleColor.Cyan)
+                   .AddSegment($" sur {cible.Nom}! \n",ConsoleColor.Red);
+            lanceur.notifier.AddMessageToQueue(message);
 
             int dommage = lanceur.CalculerDommage(resultatAttaque, resultatDefense, Type, cible);
-            cible.Vie -= dommage;
+            lanceur.InfligerDommages(dommage, cible);
             
-
-            Console.Write($"{cible.Nom} subit  ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write($" {dommage} ");
-            Console.ResetColor();
-            Console.WriteLine("points de dégâts! \n");
 
             base.Utiliser(lanceur, cible);
 
