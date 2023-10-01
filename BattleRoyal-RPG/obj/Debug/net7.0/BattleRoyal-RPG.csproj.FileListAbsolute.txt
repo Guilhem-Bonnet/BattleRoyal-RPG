@@ -13,3 +13,17 @@ H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\De
 H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.pdb
 H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.genruntimeconfig.cache
 H:\Mon Drive\Travail\ProjetsDev\BR_RPG_C#\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\ref\BattleRoyal-RPG.dll
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.exe
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.deps.json
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.runtimeconfig.json
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.dll
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\bin\Debug\net7.0\BattleRoyal-RPG.pdb
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.GeneratedMSBuildEditorConfig.editorconfig
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.AssemblyInfoInputs.cache
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.AssemblyInfo.cs
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.csproj.CoreCompileInputs.cache
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.dll
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\refint\BattleRoyal-RPG.dll
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.pdb
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\BattleRoyal-RPG.genruntimeconfig.cache
+F:\Projets-Jeux\BattleRoyal-RPG\BattleRoyal-RPG\obj\Debug\net7.0\ref\BattleRoyal-RPG.dll

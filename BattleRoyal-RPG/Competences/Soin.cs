@@ -1,4 +1,7 @@
 ﻿using BattleRoyal_RPG.Classe;
+using BattleRoyal_RPG.Core;
+using BattleRoyal_RPG.Enums;
+using BattleRoyal_RPG.Observeur;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +22,11 @@ namespace BattleRoyal_RPG.Competences
         {
             if (EstDisponible)
             {
+                Message message = new Message();
+                message.AddSegment($"{lanceur.Nom} utilise  ")
+                       .AddSegment($"{Nom}", ConsoleColor.Cyan)
+                       .AddSegment($" sur {cible.Nom}! \n", ConsoleColor.Red);
 
-                Console.Write($"{lanceur.Nom} utilise  ");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write($" {Nom} ");
-                Console.ResetColor();
-                Console.WriteLine($"sur {cible.Nom}! \n");
 
                 // Soins ou dommages basés sur le type de cible
                 if (cible.TypeDuPersonnage == TypePersonnage.MortVivant)
@@ -33,25 +35,23 @@ namespace BattleRoyal_RPG.Competences
                     
                     lanceur.InfligerDommages(degats, cible);
 
-                    Console.Write($"{lanceur.Nom} inflige ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($" {degats} ");
-                    Console.ResetColor();
-                    Console.WriteLine($"{cible.Nom} à {cible.Nom} avec {Nom} \n");
+                    message.AddSegment($"{lanceur.Nom} inflige ")
+                           .AddSegment($"{degats} ", ConsoleColor.Red)
+                           .AddSegment($" à {cible.Nom} avec {Nom} \n");
 
                 }
                 else
                 {
                     cible.Vie += valueSoin; // guérit les autres
 
-                    Console.Write($"{lanceur.Nom} soigne {cible.Nom} avec {Nom} et regagne");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write($" {valueSoin} ");
-                    Console.ResetColor();
-                    Console.WriteLine("points de vie! \n");
+                    message.AddSegment($"{lanceur.Nom} soigne ")
+                           .AddSegment($"{cible.Nom} ", ConsoleColor.Green)
+                           .AddSegment($" avec {Nom} et regagne ")
+                           .AddSegment($"{valueSoin} ", ConsoleColor.Green)
+                           .AddSegment($" points de vie! \n");
 
                 }
-                Console.ResetColor();
+                Personnage.notifier.AddMessageToQueue(message);
 
                 base.Utiliser(lanceur, cible);
             }

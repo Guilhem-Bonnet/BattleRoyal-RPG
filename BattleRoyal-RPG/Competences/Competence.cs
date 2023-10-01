@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BattleRoyal_RPG.Core;
+using BattleRoyal_RPG.Enums;
 using BattleRoyal_RPG.Interface;
 
 namespace BattleRoyal_RPG.Competences

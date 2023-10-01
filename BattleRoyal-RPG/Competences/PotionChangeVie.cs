@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BattleRoyal_RPG.Core;
+using BattleRoyal_RPG.Enums;
+using BattleRoyal_RPG.Observeur;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,16 +18,18 @@ namespace BattleRoyal_RPG.Competences
 
         public override async Task Utiliser(Personnage lanceur, Personnage cible)
         {
+            Message message = new Message();
             if (!cible.EstAttaquable)
             {
-                Console.WriteLine("La cible n'est pas attaquable!");
+                message.AddSegment($"La cible {cible.Nom} n'est pas attaquable!", ConsoleColor.Red);
+                Personnage.notifier.AddMessageToQueue(message);
                 return;
             }
-            Console.Write($"{lanceur.Nom} utilise  ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write($" {Nom} ");
-            Console.ResetColor();
-            Console.WriteLine($"sur {cible.Nom}! \n");
+            message.AddSegment($"{lanceur.Nom} utilise  ")
+                   .AddSegment($"{Nom}", ConsoleColor.Cyan)
+                   .AddSegment($" sur {cible.Nom}! \n", ConsoleColor.Red);
+            
+
 
             int VieActuelle = lanceur.Vie;
             int VieCible = cible.Vie;   
@@ -37,8 +42,11 @@ namespace BattleRoyal_RPG.Competences
             lanceur.Vie = VieCible;
             cible.Vie = VieActuelle;
 
-            Console.Write($"{lanceur.Nom} échange sa vie avec {cible.Nom} ");
-            Console.WriteLine($"{cible.Nom} à maintenant {cible.Vie} et {lanceur.Nom} à {lanceur.Vie} \n");
+            message.AddSegment($"{lanceur.Nom} échange sa vie avec {cible.Nom} ")
+                   .AddSegment($"{cible.Nom} à maintenant {cible.Vie} et {lanceur.Nom} à {lanceur.Vie} \n");
+            Personnage.notifier.AddMessageToQueue(message);
+
+
 
             base.Utiliser(lanceur, cible);
         }

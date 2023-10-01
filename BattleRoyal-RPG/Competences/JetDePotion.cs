@@ -1,4 +1,5 @@
-﻿using BattleRoyal_RPG.State;
+﻿using BattleRoyal_RPG.Core;
+using BattleRoyal_RPG.State;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,14 @@ namespace BattleRoyal_RPG.Competences
 
         public override Task Utiliser(Personnage lanceur, Personnage cible)
         {
-            cible.AjouterEtat(new EtatEmpoisonne(cible));
-            return base.Utiliser(lanceur, cible);
+            if (!cible.EstMort || cible != null)
+            {
+                cible.AppliquerOuCumulerEtat(new EtatEmpoisonne(cible));
+                return base.Utiliser(lanceur, cible);
+            }
+            return Task.CompletedTask;
             
+
         }
     }
    

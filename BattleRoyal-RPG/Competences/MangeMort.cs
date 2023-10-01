@@ -1,4 +1,7 @@
-﻿using BattleRoyal_RPG.Decorateur;
+﻿using BattleRoyal_RPG.Core;
+using BattleRoyal_RPG.Decorateur;
+using BattleRoyal_RPG.Enums;
+using BattleRoyal_RPG.Observeur;
 using BattleRoyal_RPG.State;
 using System;
 using System.Collections.Generic;
@@ -6,12 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BattleRoyal_RPG.Competences
 {
     public class MangeMort : Competence
     {
         public override string Nom => "Mangeur de cadavre";
-        public const int Gain_vie = 20;
+        public int Gain_vie = 0;
         public override float Recharge_Initiale { get; set; } = 2;
    
 
@@ -22,21 +26,29 @@ namespace BattleRoyal_RPG.Competences
             if (cible.EstMangeable && EstDisponible)
             {
                 // Le zombie consomme le cadavre et regagne de la vie
+                if (cible.Etats.Any(e => e is EstMange))
+                {
+                    // Gérer l'erreur - peut-être lancer une exception ou simplement retourner
+                    throw new InvalidOperationException("Le cadavre a déjà été consommé.");
+                }
+                else
+                {
+                    new EstMange(cible);
+                    Gain_vie = cible.VieMax / 2;
+                    lanceur.Vie += Gain_vie;
 
-                lanceur.Vie += Gain_vie;
-                new EstMange(cible);
+                    Message message = new Message();
+                    message.AddSegment($"{lanceur.Nom} utilise  ")
+                           .AddSegment($"{Nom}", ConsoleColor.Cyan)
+                           .AddSegment($" sur {cible.Nom}! \n", ConsoleColor.Red)
+                           .AddSegment($"il gagne")
+                           .AddSegment($" {Gain_vie} ", ConsoleColor.Green);
 
-                Console.Write($"{lanceur.Nom} ");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write($"utilise {Nom} ");
-                Console.ResetColor();
-                Console.Write($"et consomme le cadavre de {cible.Nom} et regagne");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($" {Gain_vie} ");
-                Console.ResetColor();
-                Console.WriteLine("points de vie! \n");
+                    Personnage.notifier.AddMessageToQueue(message);
 
-                
+                }
+
+
 
             }
             else if (!cible.EstMangeable)

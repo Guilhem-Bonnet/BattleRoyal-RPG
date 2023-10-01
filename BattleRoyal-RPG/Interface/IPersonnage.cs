@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BattleRoyal_RPG.Core;
+using BattleRoyal_RPG.Enums;
 
 namespace BattleRoyal_RPG.Interface
 {
@@ -18,9 +20,10 @@ namespace BattleRoyal_RPG.Interface
         bool EstMangeable { get; set; }    // Pour déterminer si le personnage est mangeable
         public TypePersonnage TypeDuPersonnage { get; set; }
         void AttaquerBase(Personnage cible);
-        Task ExecuterStrategie();
+        Task Strategie();
         List<ICompetence> Competences { get; set; }
         ResultatDe LancerDe();
+
 
 
     }

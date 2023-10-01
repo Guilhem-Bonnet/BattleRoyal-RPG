@@ -1,4 +1,6 @@
-﻿using BattleRoyal_RPG.Observeur;
+﻿using BattleRoyal_RPG.Core;
+using BattleRoyal_RPG.Enums;
+using BattleRoyal_RPG.Observeur;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,7 @@ namespace BattleRoyal_RPG.Competences
             if (!cible.EstAttaquable)
             {
                 message.AddSegment($"La cible {cible.Nom} n'est pas attaquable!", ConsoleColor.Red);
-                lanceur.notifier.AddMessageToQueue(message);
+                Personnage.notifier.AddMessageToQueue(message);
                 return;
             }
 
@@ -31,13 +33,13 @@ namespace BattleRoyal_RPG.Competences
             message.AddSegment($"{lanceur.Nom} utilise  ")
                    .AddSegment($"{Nom}", ConsoleColor.Cyan)
                    .AddSegment($" sur {cible.Nom}! \n",ConsoleColor.Red);
-            lanceur.notifier.AddMessageToQueue(message);
+            Personnage.notifier.AddMessageToQueue(message);
 
             int dommage = lanceur.CalculerDommage(resultatAttaque, resultatDefense, Type, cible);
             lanceur.InfligerDommages(dommage, cible);
             
 
-            base.Utiliser(lanceur, cible);
+            await base.Utiliser(lanceur, cible);
 
         }
 

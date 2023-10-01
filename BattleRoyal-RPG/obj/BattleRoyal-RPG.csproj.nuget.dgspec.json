@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\Mon Drive\\Travail\\ProjetsDev\\BR_RPG_C#\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj": {}
+    "F:\\Projets-Jeux\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj": {}
   },
   "projects": {
-    "H:\\Mon Drive\\Travail\\ProjetsDev\\BR_RPG_C#\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj": {
+    "F:\\Projets-Jeux\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\Mon Drive\\Travail\\ProjetsDev\\BR_RPG_C#\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj",
+        "projectUniqueName": "F:\\Projets-Jeux\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj",
         "projectName": "BattleRoyal-RPG",
-        "projectPath": "H:\\Mon Drive\\Travail\\ProjetsDev\\BR_RPG_C#\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj",
+        "projectPath": "F:\\Projets-Jeux\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj",
         "packagesPath": "C:\\Users\\guilh\\.nuget\\packages\\",
-        "outputPath": "H:\\Mon Drive\\Travail\\ProjetsDev\\BR_RPG_C#\\BattleRoyal-RPG\\BattleRoyal-RPG\\obj\\",
+        "outputPath": "F:\\Projets-Jeux\\BattleRoyal-RPG\\BattleRoyal-RPG\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -59,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
