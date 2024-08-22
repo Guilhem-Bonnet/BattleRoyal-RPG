@@ -10,11 +10,11 @@ namespace BattleRoyal_RPG.Interface
 {
     public interface ICompetence
     {
-        string Nom { get; }
+        string Name { get; }
         float DelaiRecharge { get; set; }
         float Recharge_Initiale { get; set; }
         bool EstDisponible { get; }
-        public TypeAttaque Type { get; set; }
+        public TypeAttack Type { get; set; }
         Task Utiliser(Personnage lanceur, Personnage cible);
 
     }

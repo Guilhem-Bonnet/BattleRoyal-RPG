@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BattleRoyal_RPG.Enums
 {
-    public enum ResultatDe
+    public enum ResultDe
     { EchecCritique = 1, Echec, Neutre, Réussite, RéussiteCritique }
 
 }

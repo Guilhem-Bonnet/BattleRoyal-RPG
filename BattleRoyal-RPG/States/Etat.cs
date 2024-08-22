@@ -11,7 +11,8 @@ namespace BattleRoyal_RPG
     {
         public Personnage Personnage { get; }
         protected int Cumul=0;
-        public virtual string Nom { get; } = "";
+        protected CancellationTokenSource _cts = new CancellationTokenSource();
+        public virtual string Name { get; } = "";
 
         public Etat(Personnage personnage)
         {
@@ -27,7 +28,9 @@ namespace BattleRoyal_RPG
         public virtual async Task Debut() { }
 
         // Cette méthode sera appelée lorsque l'état est retiré
-        public virtual async Task Fin() {
+        public virtual void Fin() {
+            _cts.Cancel();
+            AnnulerCumul();
             Personnage.Etats.Remove(this);
         }
 
@@ -38,7 +41,7 @@ namespace BattleRoyal_RPG
 
         public virtual void AnnulerCumul()
         {
-            Cumul = 1;
+            Cumul = 0;
         }
     }
 

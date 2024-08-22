@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "MhKts//RdS7LgxJZbC0BlI95cZL1oQCjFDMBQfTxAeWD8kf5WgzkWwFw9HAZNKJubPiuTwVCh6rlsgTwSzrLcw==",
+  "dgSpecHash": "Lug87y2TQxeegYYrJmdpKq38NIez1z5IOZpgTBJE6PhnvqX8wmFNI7VpfQP6lr01uisP9Mej4TABHZU+p/99pg==",
   "success": true,
   "projectFilePath": "F:\\Projets-Jeux\\BattleRoyal-RPG\\BattleRoyal-RPG\\BattleRoyal-RPG.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\guilh\\.nuget\\packages\\mstest.testframework\\3.1.1\\mstest.testframework.3.1.1.nupkg.sha512"
+  ],
   "logs": []
 }

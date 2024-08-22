@@ -1,4 +1,5 @@
 ﻿using BattleRoyal_RPG.Core;
+using BattleRoyal_RPG.Services;
 using BattleRoyal_RPG.State;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,17 @@ using System.Threading.Tasks;
 
 namespace BattleRoyal_RPG.Competences
 {
-    internal class JetDePotion : AttaqueBase
+    internal class JetDePotion : AttackBase
     {
-        public override string Nom => "Jet de fiole";
+        public JetDePotion(FightService fightService) : base(fightService)
+        {
+
+        }
+        public override string Name => "Jet de fiole";
 
         public override Task Utiliser(Personnage lanceur, Personnage cible)
         {
-            if (!cible.EstMort || cible != null)
+            if (!cible.IsDead || cible != null)
             {
                 cible.AppliquerOuCumulerEtat(new EtatEmpoisonne(cible));
                 return base.Utiliser(lanceur, cible);

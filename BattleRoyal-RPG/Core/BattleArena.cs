@@ -25,8 +25,8 @@ namespace BattleRoyal_RPG.Core
 
 
             // Attendre que le combat soit terminé
-            while (Participants.Count(p => p.Vie > 0) > 1 &&
-                   !(Participants.Count(p => p.Vie > 0 && p.TypeDuPersonnage != TypePersonnage.MortVivant) == 0))
+            while (Participants.Count(p => p.Life > 0) > 1 &&
+                   !(Participants.Count(p => p.Life > 0 && p.TypeDuPersonnage != TypePersonnage.MortVivant) == 0))
             {
 
                 await Task.Delay(1000);
@@ -36,18 +36,18 @@ namespace BattleRoyal_RPG.Core
             // Affichage des résultats
             foreach (var participant in Participants)
             {
-                Console.Write($"{participant.Nom} \n");
-                Console.Write($"Vie: {participant.Vie} \n");
-                Console.Write($"EstMort: {participant.EstMort}. \n");
-                Console.Write($"EstMangeable: {participant.EstMangeable}.\n");
-                Console.Write($"EstAttaquable: {participant.EstAttaquable}.\n");
+                Console.Write($"{participant.Name} \n");
+                Console.Write($"Life: {participant.Life} \n");
+                Console.Write($"IsDead: {participant.IsDead}. \n");
+                Console.Write($"IsEatable: {participant.IsEatable}.\n");
+                Console.Write($"IsAttackable: {participant.IsAttackable}.\n");
                 Console.Write($"\n");
             }
-            var survivors = Participants.Where(p => p.Vie > 0).ToList();
+            var survivors = Participants.Where(p => p.Life > 0).ToList();
             if (survivors.Count == 1)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"{survivors[0].Nom} est le dernier survivant!");
+                Console.WriteLine($"{survivors[0].Name} est le dernier survivant!");
             }
             else if (survivors.All(s => s.TypeDuPersonnage == TypePersonnage.MortVivant))
             {

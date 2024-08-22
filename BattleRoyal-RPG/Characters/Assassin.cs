@@ -9,7 +9,7 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Assassin : Personnage
     {
-        public Assassin(string nom) : base(nom)
+        public Assassin(string Name) : base(Name)
         {
         }
 

@@ -17,9 +17,9 @@ namespace BattleRoyal_RPG.Core
             // Rediriger la sortie standard vers un fichier texte
 
 
-            var notifier = MessageNotifier.Instance;
+            var notify = MessageNotify.Instance;
             var consoleObserver = new ConsoleObserver();
-            notifier.RegisterObserver(consoleObserver);
+            notify.RegisterObserver(consoleObserver);
 
             // Initialisation des participants
             var zombie = new Zombie("Zombie Gaetan");

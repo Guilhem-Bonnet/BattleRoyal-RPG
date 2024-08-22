@@ -10,9 +10,9 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Paladin : Personnage
     {
-        public Paladin(string nom) : base(nom)
+        public Paladin(string Name) : base(Name)
         {
-            Competences[0].Type = TypeAttaque.Sacre;
+            Competences[0].Type = TypeAttack.Sacre;
         }
 
         public override async Task Strategie()

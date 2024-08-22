@@ -1,6 +1,7 @@
 ﻿using BattleRoyal_RPG.Competences;
 using BattleRoyal_RPG.Core;
 using BattleRoyal_RPG.Enums;
+using BattleRoyal_RPG.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Alchimiste : Personnage
     {
-        public Alchimiste(string nom) : base(nom)
+        public Alchimiste(string Name) : base(Name)
         {
-            Competences[0] = new JetDePotion();
-            Competences.Add(new PotionChangeVie());
+            Competences[0] = new JetDePotion((FightService)_fightservice);
+            Competences.Add(new PotionChangeLife());
             Defense = 2;
             
         }
@@ -22,41 +23,41 @@ namespace BattleRoyal_RPG.Characters
         public override async Task Strategie()
         {
             Personnage cible = ChoisirCible();
-            Personnage cibleChangeVie = ChoisirCibleChangeVie();
+            Personnage cibleChangeLife = ChoisirCibleChangeLife();
             if (cible == null)
             {
                 return;
             }
 
-            var competencePotionChangeVie = Competences.FirstOrDefault(c => c is PotionChangeVie && c.EstDisponible);
-            var competenceAttaqueBase = Competences.FirstOrDefault(c => c.EstDisponible && c is JetDePotion);
+            var competencePotionChangeLife = Competences.FirstOrDefault(c => c is PotionChangeLife && c.EstDisponible);
+            var competenceAttackBase = Competences.FirstOrDefault(c => c.EstDisponible && c is JetDePotion);
 
             // Décidez quand utiliser le soin
-            if (competencePotionChangeVie != null && cibleChangeVie != null && Vie <= VieMax*0.8) // Si la compétence est disponible et que la cible est valide et que la vie est inférieur à 80%
+            if (competencePotionChangeLife != null && cibleChangeLife != null && Life <= MaxLife*0.8) // Si la compétence est disponible et que la cible est valide et que la Life est inférieur à 80%
             {
-                await competencePotionChangeVie.Utiliser(this, cibleChangeVie);
+                await competencePotionChangeLife.Utiliser(this, cibleChangeLife);
                 return;
             }
             
 
-            // Si rien de ce qui précède ne s'applique, utilisez l'attaque de base
-            if (competenceAttaqueBase != null)
+            // Si rien de ce qui précède ne s'applique, utilisez l'Attack de base
+            if (competenceAttackBase != null)
             {
-                await competenceAttaqueBase.Utiliser(this, cible);
+                await competenceAttackBase.Utiliser(this, cible);
             }
         }
         private Personnage ChoisirCible()
         {
             return GetEnemies();
         }
-        private Personnage ChoisirCibleChangeVie()
+        private Personnage ChoisirCibleChangeLife()
         {
             Personnage personnageCible = this;
             foreach (var participant in BattleArena.Participants)
             {
-                if (!participant.EstMort && participant != this)
+                if (!participant.IsDead && participant != this)
                 {
-                    if (participant.Vie > personnageCible.Vie)
+                    if (participant.Life > personnageCible.Life)
                     {
                         personnageCible = participant;
                     }
@@ -71,8 +72,8 @@ namespace BattleRoyal_RPG.Characters
         }
         private Personnage GetEnemies()
         {
-            // Trouver tous les MortVivants encore en vie.
-            var mortVivants = BattleArena.Participants.Where(p => p.Vie > 0 && p.TypeDuPersonnage == TypePersonnage.MortVivant).ToList();
+            // Trouver tous les MortVivants encore en Life.
+            var mortVivants = BattleArena.Participants.Where(p => p.Life > 0 && p.TypeDuPersonnage == TypePersonnage.MortVivant).ToList();
 
             if (mortVivants.Any())
             {
@@ -80,7 +81,7 @@ namespace BattleRoyal_RPG.Characters
 
                 foreach (var participant in mortVivants)
                 {
-                    if (!participant.EstMort && participant.TypeDuPersonnage == TypePersonnage.MortVivant)
+                    if (!participant.IsDead && participant.TypeDuPersonnage == TypePersonnage.MortVivant)
                     {
                         ciblesMortVivant.Add(participant);
                     }
@@ -96,7 +97,7 @@ namespace BattleRoyal_RPG.Characters
                 List<Personnage> cibles = new List<Personnage>();
                 foreach (var participant in BattleArena.Participants)
                 {
-                    if (!participant.EstMort && participant != this)
+                    if (!participant.IsDead && participant != this)
                     {
                         cibles.Add(participant);
                     }

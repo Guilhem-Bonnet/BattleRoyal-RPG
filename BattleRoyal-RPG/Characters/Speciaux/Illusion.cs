@@ -9,7 +9,7 @@ namespace BattleRoyal_RPG.Classe.Speciaux
 {
     internal class Illusion : Illusioniste
     {
-        public Illusion(string nom) : base(nom)
+        public Illusion(string Name) : base(Name)
         {
         }
     }

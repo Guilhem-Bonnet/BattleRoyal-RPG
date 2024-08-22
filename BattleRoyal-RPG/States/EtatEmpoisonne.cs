@@ -9,7 +9,7 @@ using BattleRoyal_RPG.Observeur;
 
 /*
 Effet d'empoisonnement :
-- Fait perdre 3 points de vie par seconde pendant 5 secondes
+- Fait perdre 3 points de Life par seconde pendant 5 secondes
 - Cumulable
 
  */
@@ -18,9 +18,9 @@ namespace BattleRoyal_RPG.State
 {
     internal class EtatEmpoisonne : Etat
     {
-        public override string Nom => "Empoisoné";
+        public override string Name => "Empoisoné";
         public int degats = 3;
-        private CancellationTokenSource _cts=new CancellationTokenSource();
+        
         private int duree = 2;
 
         public EtatEmpoisonne(Personnage personnage) : base(personnage) {
@@ -43,29 +43,29 @@ namespace BattleRoyal_RPG.State
 
                 if (_cts.Token.IsCancellationRequested)
                     return;
-                if (Personnage.EstMort)
+                if (Personnage.IsDead)
                 {
-                    await base.Fin();
+                    Fin();
                     return;
                 }
 
                 message.Clear(); // Clear l'ancien message
-                message.AddSegment($"{Personnage.Nom} est empoisoné et perd ", ConsoleColor.DarkMagenta)
+                message.AddSegment($"{Personnage.Name} est empoisoné et perd ", ConsoleColor.DarkMagenta)
                        .AddSegment($"{degats * Cumul}pv ", ConsoleColor.Red) // Montrer les dégâts augmentés
                        .AddSegment($"(Stacks de poison: {Cumul})", ConsoleColor.Yellow);
 
 
-                Personnage.Vie -= degats * Cumul;
+                Personnage.Life -= degats * Cumul;
 
-                if (Personnage.EstMort)
+                if (Personnage.IsDead)
                 {
-                    message.AddSegment($"{Personnage.Nom} est mort empoisoné", ConsoleColor.DarkMagenta);
-                    Personnage.notifier.AddMessageToQueue(message);
-                    await base.Fin();
+                    message.AddSegment($"{Personnage.Name} est mort empoisoné", ConsoleColor.DarkMagenta);
+                    Personnage.notify.AddMessageToQueue(message);
+                    Fin();
                     return;
                 }
 
-                Personnage.notifier.AddMessageToQueue(message);
+                Personnage.notify.AddMessageToQueue(message);
                 await Task.Delay(1000); // Attend 1 seconde
             }
 

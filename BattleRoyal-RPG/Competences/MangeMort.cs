@@ -14,18 +14,18 @@ namespace BattleRoyal_RPG.Competences
 {
     public class MangeMort : Competence
     {
-        public override string Nom => "Mangeur de cadavre";
-        public int Gain_vie = 0;
+        public override string Name => "Mangeur de cadavre";
+        public int Gain_life = 0;
         public override float Recharge_Initiale { get; set; } = 2;
    
 
-        public override TypeAttaque Type { get; set; } = TypeAttaque.Normal;
+        public override TypeAttack Type { get; set; } = TypeAttack.Normal;
 
         public override async Task Utiliser(Personnage lanceur, Personnage cible)
         {
-            if (cible.EstMangeable && EstDisponible)
+            if (cible.IsEatable && EstDisponible)
             {
-                // Le zombie consomme le cadavre et regagne de la vie
+                // Le zombie consomme le cadavre et regagne de la Life
                 if (cible.Etats.Any(e => e is EstMange))
                 {
                     // Gérer l'erreur - peut-être lancer une exception ou simplement retourner
@@ -34,24 +34,24 @@ namespace BattleRoyal_RPG.Competences
                 else
                 {
                     new EstMange(cible);
-                    Gain_vie = cible.VieMax / 2;
-                    lanceur.Vie += Gain_vie;
+                    Gain_life = cible.MaxLife / 2;
+                    lanceur.Life += Gain_life;
 
                     Message message = new Message();
-                    message.AddSegment($"{lanceur.Nom} utilise  ")
-                           .AddSegment($"{Nom}", ConsoleColor.Cyan)
-                           .AddSegment($" sur {cible.Nom}! \n", ConsoleColor.Red)
+                    message.AddSegment($"{lanceur.Name} utilise  ")
+                           .AddSegment($"{Name}", ConsoleColor.Cyan)
+                           .AddSegment($" sur {cible.Name}! \n", ConsoleColor.Red)
                            .AddSegment($"il gagne")
-                           .AddSegment($" {Gain_vie} ", ConsoleColor.Green);
+                           .AddSegment($" {Gain_life} ", ConsoleColor.Green);
 
-                    Personnage.notifier.AddMessageToQueue(message);
+                    Personnage.notify.AddMessageToQueue(message);
 
                 }
 
 
 
             }
-            else if (!cible.EstMangeable)
+            else if (!cible.IsEatable)
             {
                 // Gérer l'erreur - peut-être lancer une exception ou simplement retourner
                 throw new InvalidOperationException("La cible doit être un cadavre pour utiliser cette compétence.");

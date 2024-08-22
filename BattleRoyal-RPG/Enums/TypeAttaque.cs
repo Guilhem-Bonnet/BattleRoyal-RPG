@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BattleRoyal_RPG.Enums
 {
-    public enum TypeAttaque
+    public enum TypeAttack
     {
         Normal,
         Sacre,

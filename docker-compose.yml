@@ -1,0 +1,58 @@
+name: battle_royal-rpg
+services:
+  app:
+    container_name: myapp
+    build:
+      context: ./BattleRoyal-RPG
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - mongodb
+      - redis
+
+  charts:
+    build:
+      context: 'docker/charts'
+      args:
+        - EMAIL=admin@example.com
+        - PASSWORD=StrongPassw0rd
+    image: charts
+    ports:
+      - 8080:80
+    environment:
+      CHARTS_SUPPORT_WIDGET_AND_METRICS: 'on'
+      CHARTS_MONGODB_URI: 'mongodb://mongo:27017/admin?replicaSet=rs0'
+    volumes:
+      - keys:/mongodb-charts/volumes/keys
+      - logs:/mongodb-charts/volumes/logs
+      - db-certs:/mongodb-charts/volumes/db-certs
+      - web-certs:/mongodb-charts/volumes/web-certs
+    depends_on:
+      - mongo
+    container_name: charts
+
+  mongo:
+    hostname: mongo
+    build:
+      context: 'docker/mongo'
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data/db
+    image: charts_mongo
+    container_name: mongo
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  mongodb_data:
+  keys:
+  logs:
+  db-certs:
+  web-certs:
+  mongo:

@@ -9,7 +9,7 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Magicien : Personnage
     {
-        public Magicien(string nom) : base(nom)
+        public Magicien(string Name) : base(Name)
         {
         }
 

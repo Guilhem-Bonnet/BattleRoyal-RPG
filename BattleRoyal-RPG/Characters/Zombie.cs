@@ -14,7 +14,7 @@ namespace BattleRoyal_RPG.Characters
     {
         private const int SEUIL_SANTE = 70;  // seuil de santé pour décider s'il doit utiliser "MangeMort" ou non
         private Random _rand = new Random();
-        public Zombie(string nom) : base(nom)
+        public Zombie(string Name) : base(Name)
         {
             TypeDuPersonnage = TypePersonnage.MortVivant;
             Defense = 0;
@@ -24,10 +24,10 @@ namespace BattleRoyal_RPG.Characters
         public override async Task Strategie()
         {
             var competenceMangeMort = Competences.FirstOrDefault(c => c.EstDisponible && c is MangeMort);
-            var competenceAttaque = Competences.FirstOrDefault(c => c.EstDisponible && c is AttaqueBase);
+            var competenceAttack = Competences.FirstOrDefault(c => c.EstDisponible && c is AttackBase);
             
 
-            if (Vie <= SEUIL_SANTE && competenceMangeMort != null)
+            if (Life <= SEUIL_SANTE && competenceMangeMort != null)
             {
                 // Cherche une cible morte parmi tous les personnages.
                 var cibleMorte = TrouverCibleMorte();
@@ -36,12 +36,12 @@ namespace BattleRoyal_RPG.Characters
                 {
                     Message message = new Message();
                     // Si une cible morte est trouvée, utilise "MangeMort".
-                    message.AddSegment($"{Nom} trouve  ")
-                           .AddSegment($"{cibleMorte.Nom}", ConsoleColor.Cyan)
+                    message.AddSegment($"{Name} trouve  ")
+                           .AddSegment($"{cibleMorte.Name}", ConsoleColor.Cyan)
                            .AddSegment($" et utilise  ")
-                           .AddSegment($"{competenceMangeMort.Nom}", ConsoleColor.Cyan)
-                           .AddSegment($" sur {cibleMorte.Nom}! \n", ConsoleColor.Red);
-                    notifier.AddMessageToQueue(message);
+                           .AddSegment($"{competenceMangeMort.Name}", ConsoleColor.Cyan)
+                           .AddSegment($" sur {cibleMorte.Name}! \n", ConsoleColor.Red);
+                    notify.AddMessageToQueue(message);
 
                     await competenceMangeMort.Utiliser(this, cibleMorte);
                     return;
@@ -53,7 +53,7 @@ namespace BattleRoyal_RPG.Characters
 
             if (cibleNonMortVivant != null && Competences[0].EstDisponible)
             {
-                // Si une cible non MortVivant est trouvée, utilise son attaque de base ou une autre compétence.
+                // Si une cible non MortVivant est trouvée, utilise son Attack de base ou une autre compétence.
                 await Competences[0].Utiliser(this, cibleNonMortVivant);
             }
         }
@@ -65,7 +65,7 @@ namespace BattleRoyal_RPG.Characters
 
             foreach (var participant in BattleArena.Participants)
             {
-                if (!participant.EstMort && participant.TypeDuPersonnage != TypePersonnage.MortVivant)
+                if (!participant.IsDead && participant.TypeDuPersonnage != TypePersonnage.MortVivant)
                 {
                     ciblesMortVivant.Add(participant);
                 }
@@ -81,7 +81,7 @@ namespace BattleRoyal_RPG.Characters
         private Personnage TrouverCibleMorte()
         {
             // Supposant que vous avez une méthode pour récupérer tous les personnages.
-            return BattleArena.Participants.FirstOrDefault(predicate: p => p.EstMangeable);
+            return BattleArena.Participants.FirstOrDefault(predicate: p => p.IsEatable);
         }
 
     }

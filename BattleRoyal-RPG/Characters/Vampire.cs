@@ -10,7 +10,7 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Vampire : Personnage
     {
-        public Vampire(string nom) : base(nom)
+        public Vampire(string Name) : base(Name)
         {
             TypeDuPersonnage = TypePersonnage.MortVivant;
         }

@@ -15,17 +15,17 @@ namespace BattleRoyal_RPG.State
 
         public virtual bool Mort
         {
-            get { return PersonnageDecore.EstMort; } // Par défaut, un personnage est vivant
+            get { return PersonnageDecore.IsDead; } // Par défaut, un personnage est vivant
 
         }
-        public virtual bool EstAttaquable
+        public virtual bool IsAttackable
         {
-            get { return PersonnageDecore.EstAttaquable; } // Par défaut, un personnage est attaquable
+            get { return PersonnageDecore.IsAttackable; } // Par défaut, un personnage est attaquable
         }
-        public virtual bool EstMangeable
+        public virtual bool IsEatable
         {
-            get { return PersonnageDecore.EstMangeable; } // Par défaut, un personnage n'est pas mangeable
-            set { PersonnageDecore.EstMangeable = value; }
+            get { return PersonnageDecore.IsEatable; } // Par défaut, un personnage n'est pas mangeable
+            set { PersonnageDecore.IsEatable = value; }
         }
 
         public EtatDecorateurAsync(IPersonnage personnage)
@@ -34,27 +34,27 @@ namespace BattleRoyal_RPG.State
             
         }
 
-        public virtual int Vie
+        public virtual int Life
         {
-            get { return PersonnageDecore.Vie; }
-            set { PersonnageDecore.Vie = value; }
+            get { return PersonnageDecore.Life; }
+            set { PersonnageDecore.Life = value; }
         }
 
-        public virtual int Attaque
+        public virtual int AttackValue
         {
-            get { return PersonnageDecore.Attaque; }
-            set { PersonnageDecore.Attaque = value; }
+            get { return PersonnageDecore.Attack; }
+            set { PersonnageDecore.Attack = value; }
         }
 
-        public virtual int Defense
+        public virtual int DefenseValue
         {
             get { return PersonnageDecore.Defense; }
             set { PersonnageDecore.Defense = value; }
         }
 
-        public virtual void Attaquer(Personnage cible)
+        public virtual void Attack(Personnage cible)
         {
-            PersonnageDecore.AttaquerBase(cible);
+            PersonnageDecore.AttackBase(cible);
         }
 
 

@@ -9,16 +9,16 @@ using BattleRoyal_RPG.Interface;
 
 namespace BattleRoyal_RPG.Competences
 {
-    public class Competence : ICompetence
+    public abstract class Competence : ICompetence
     {
-        public virtual string Nom => throw new NotImplementedException();
+        public virtual string Name => throw new NotImplementedException();
 
         public virtual float DelaiRecharge { get; set; }
         public virtual float Recharge_Initiale { get; set; } = 1;
 
         public virtual bool EstDisponible => DelaiRecharge <= 0;
 
-        public virtual TypeAttaque Type { get; set; } = TypeAttaque.Normal;
+        public virtual TypeAttack Type { get; set; } = TypeAttack.Normal;
 
         public virtual async Task Utiliser(Personnage lanceur, Personnage cible)
         {

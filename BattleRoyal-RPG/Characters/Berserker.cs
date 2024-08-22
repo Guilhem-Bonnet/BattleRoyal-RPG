@@ -9,7 +9,7 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Berserker : Personnage
     {
-        public Berserker(string nom) : base(nom)
+        public Berserker(string Name) : base(Name)
         {
         }
 

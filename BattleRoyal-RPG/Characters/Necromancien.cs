@@ -9,7 +9,7 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Necromancien : Personnage
     {
-        public Necromancien(string nom) : base(nom)
+        public Necromancien(string Name) : base(Name)
         {
         }
 

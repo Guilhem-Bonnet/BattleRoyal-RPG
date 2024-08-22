@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 
 namespace BattleRoyal_RPG.Observeur
 {
-    public class MessageNotifier
+    public class MessageNotify
     {
         private readonly ConcurrentQueue<Message> messageQueue = new ConcurrentQueue<Message>();
         private readonly List<IMessageObserver> observers = new List<IMessageObserver>();
 
-        private static MessageNotifier _instance;
-        private MessageNotifier() { }
+        private static MessageNotify _instance;
+        private MessageNotify() { }
 
-        public static MessageNotifier Instance
+        public static MessageNotify Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new MessageNotifier();
+                    _instance = new MessageNotify();
                 }
                 return _instance;
             }

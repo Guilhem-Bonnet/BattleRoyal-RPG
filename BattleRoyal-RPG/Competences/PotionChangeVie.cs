@@ -9,42 +9,42 @@ using System.Threading.Tasks;
 
 namespace BattleRoyal_RPG.Competences
 {
-    public class PotionChangeVie : Competence
+    public class PotionChangeLife : Competence
     {
-        public override string Nom => "Potion SwitchLife";
-        public const int Gain_vie=0;
+        public override string Name => "Potion SwitchLife";
+        public const int Gain_life=0;
         public override float Recharge_Initiale { get; set; } = 3.2f;
-        public override TypeAttaque Type { get; set; } = TypeAttaque.Sacre;
+        public override TypeAttack Type { get; set; } = TypeAttack.Sacre;
 
         public override async Task Utiliser(Personnage lanceur, Personnage cible)
         {
             Message message = new Message();
-            if (!cible.EstAttaquable)
+            if (!cible.IsAttackable)
             {
-                message.AddSegment($"La cible {cible.Nom} n'est pas attaquable!", ConsoleColor.Red);
-                Personnage.notifier.AddMessageToQueue(message);
+                message.AddSegment($"La cible {cible.Name} n'est pas attaquable!", ConsoleColor.Red);
+                Personnage.notify.AddMessageToQueue(message);
                 return;
             }
-            message.AddSegment($"{lanceur.Nom} utilise  ")
-                   .AddSegment($"{Nom}", ConsoleColor.Cyan)
-                   .AddSegment($" sur {cible.Nom}! \n", ConsoleColor.Red);
+            message.AddSegment($"{lanceur.Name} utilise  ")
+                   .AddSegment($"{Name}", ConsoleColor.Cyan)
+                   .AddSegment($" sur {cible.Name}! \n", ConsoleColor.Red);
             
 
 
-            int VieActuelle = lanceur.Vie;
-            int VieCible = cible.Vie;   
+            int LifeActuelle = lanceur.Life;
+            int LifeCible = cible.Life;   
 
-            if (VieCible>lanceur.VieMax)
+            if (LifeCible>lanceur.MaxLife)
             {
-                VieCible = lanceur.VieMax;
+                LifeCible = lanceur.MaxLife;
             }
 
-            lanceur.Vie = VieCible;
-            cible.Vie = VieActuelle;
+            lanceur.Life = LifeCible;
+            cible.Life = LifeActuelle;
 
-            message.AddSegment($"{lanceur.Nom} échange sa vie avec {cible.Nom} ")
-                   .AddSegment($"{cible.Nom} à maintenant {cible.Vie} et {lanceur.Nom} à {lanceur.Vie} \n");
-            Personnage.notifier.AddMessageToQueue(message);
+            message.AddSegment($"{lanceur.Name} échange sa Life avec {cible.Name} ")
+                   .AddSegment($"{cible.Name} à maintenant {cible.Life} et {lanceur.Name} à {lanceur.Life} \n");
+            Personnage.notify.AddMessageToQueue(message);
 
 
 

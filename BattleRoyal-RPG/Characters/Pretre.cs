@@ -1,6 +1,7 @@
 ﻿using BattleRoyal_RPG.Competences;
 using BattleRoyal_RPG.Core;
 using BattleRoyal_RPG.Enums;
+using BattleRoyal_RPG.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace BattleRoyal_RPG.Characters
         
         public Pretre(string Name ) : base(Name)
         {
-            Competences[0].Type = TypeAttaque.Sacre;
-            Competences.Add(new Soin());
+            Competences[0].Type = TypeAttack.Sacre;
+            Competences.Add(new Soin((FightService)_fightservice));
         }
 
 
@@ -25,16 +26,16 @@ namespace BattleRoyal_RPG.Characters
             Personnage cible = ChoisirCible();
 
             var competenceSoin = Competences.FirstOrDefault(c => c is Soin && c.EstDisponible);
-            var competenceAttaque = Competences.FirstOrDefault(c => c.EstDisponible && c is AttaqueBase);
+            var competenceAttack = Competences.FirstOrDefault(c => c.EstDisponible && c is AttackBase);
 
             // Décidez quand utiliser le soin
             if (competenceSoin != null)
             {
                 /*
                 // Supposons que vous ayez une liste de tous les alliés
-                var allieBlesse = GetAllies().OrderBy(a => a.Vie).FirstOrDefault();
+                var allieBlesse = GetAllies().OrderBy(a => a.Life).FirstOrDefault();
 
-                if (allieBlesse != null && allieBlesse.Vie <= 50)  // si un allié a 50 points de vie ou moins
+                if (allieBlesse != null && allieBlesse.Life <= 50)  // si un allié a 50 points de Life ou moins
                 {
                     await competenceSoin.Utiliser(this, allieBlesse);
                     return;
@@ -42,7 +43,7 @@ namespace BattleRoyal_RPG.Characters
                 */
 
                 // Si le prêtre est gravement blessé
-                if (Vie <= 50)  // si le prêtre a 30 points de vie ou moins
+                if (Life <= 50)  // si le prêtre a 30 points de Life ou moins
                 {
                     await competenceSoin.Utiliser(this, this);
                     return;
@@ -51,16 +52,16 @@ namespace BattleRoyal_RPG.Characters
             }
 
             // Si un MortVivant est une cible viable
-            if (competenceSoin != null && cible.TypeDuPersonnage == TypePersonnage.MortVivant && cible.Vie <= 100)
+            if (competenceSoin != null && cible.TypeDuPersonnage == TypePersonnage.MortVivant && cible.Life <= 100)
             {
                 await competenceSoin.Utiliser(this, cible);
                 return;
             }
 
-            // Si rien de ce qui précède ne s'applique, utilisez l'attaque de base
-            if (competenceAttaque != null )
+            // Si rien de ce qui précède ne s'applique, utilisez l'Attack de base
+            if (competenceAttack != null )
             {
-                await competenceAttaque.Utiliser(this, cible);
+                await competenceAttack.Utiliser(this, cible);
             }
 
         }
@@ -72,8 +73,8 @@ namespace BattleRoyal_RPG.Characters
         }
         private Personnage GetEnemies()
         {
-            // Trouver tous les MortVivants encore en vie.
-            var mortVivants = BattleArena.Participants.Where(p => p.Vie > 0 && p.TypeDuPersonnage == TypePersonnage.MortVivant).ToList();
+            // Trouver tous les MortVivants encore en Life.
+            var mortVivants = BattleArena.Participants.Where(p => p.Life > 0 && p.TypeDuPersonnage == TypePersonnage.MortVivant).ToList();
 
             if (mortVivants.Any())
             {
@@ -81,7 +82,7 @@ namespace BattleRoyal_RPG.Characters
 
                 foreach (var participant in mortVivants)
                 {
-                    if (!participant.EstMort && participant.TypeDuPersonnage == TypePersonnage.MortVivant)
+                    if (!participant.IsDead && participant.TypeDuPersonnage == TypePersonnage.MortVivant)
                     {
                         ciblesMortVivant.Add(participant);
                     }
@@ -96,7 +97,7 @@ namespace BattleRoyal_RPG.Characters
             do
             {
                 indexAleatoire = _rand.Next(BattleArena.Participants.Count); // Sélectionner un index aléatoire.
-            } while (BattleArena.Participants[indexAleatoire] == this || BattleArena.Participants[indexAleatoire].EstMort);
+            } while (BattleArena.Participants[indexAleatoire] == this || BattleArena.Participants[indexAleatoire].IsDead);
 
             // Si aucun MortVivant n'est trouvé, tous les autres personnages sont les ennemis.
             return BattleArena.Participants[indexAleatoire];

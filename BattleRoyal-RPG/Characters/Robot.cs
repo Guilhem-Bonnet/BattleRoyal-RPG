@@ -9,7 +9,7 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Robot : Personnage
     {
-        public Robot(string nom) : base(nom)
+        public Robot(string Name) : base(Name)
         {
         }
 

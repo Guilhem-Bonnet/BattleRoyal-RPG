@@ -9,7 +9,7 @@ namespace BattleRoyal_RPG.Characters
 {
     internal class Illusioniste : Personnage
     {
-        public Illusioniste(string nom) : base(nom)
+        public Illusioniste(string Name) : base(Name)
         {
         }
 

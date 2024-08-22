@@ -24,11 +24,11 @@ namespace BattleRoyal_RPG.State
             EstActuellementEtourdi = false;
         }
 
-        public override void Attaquer(Personnage cible)
+        public override void Attack(Personnage cible)
         {
             if (!EstActuellementEtourdi)
             {
-                base.Attaquer(cible);
+                base.Attack(cible);
             }
             // Si le personnage est étourdi, il ne fait rien
         }

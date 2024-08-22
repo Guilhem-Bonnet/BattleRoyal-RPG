@@ -10,19 +10,19 @@ namespace BattleRoyal_RPG.Interface
 {
     public interface IPersonnage
     {
-        string Nom { get; set; }
-        int Vie { get; set; }
-        int VieMax { get; set; }
-        int Attaque { get; set; }
+        string Name { get; set; }
+        int Life { get; set; }
+        int MaxLife { get; set; }
+        int Attack { get; set; }
         int Defense { get; set; }
-        bool EstAttaquable { get; }   // Pour déterminer si le personnage est attaquable
-        bool EstMort { get; }         // Pour déterminer si le personnage est mort
-        bool EstMangeable { get; set; }    // Pour déterminer si le personnage est mangeable
-        public TypePersonnage TypeDuPersonnage { get; set; }
-        void AttaquerBase(Personnage cible);
+        bool IsAttackable { get; }   // Pour déterminer si le personnage est attaquable
+        bool IsDead { get; }         // Pour déterminer si le personnage est mort
+        bool IsEatable { get; set; }    // Pour déterminer si le personnage est mangeable
+        TypePersonnage TypeDuPersonnage { get; set; }
+        void AttackBase(Personnage cible);
         Task Strategie();
         List<ICompetence> Competences { get; set; }
-        ResultatDe LancerDe();
+        ResultDe LancerDe();
 
 
 
